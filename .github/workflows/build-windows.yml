@@ -23,10 +23,12 @@ jobs:
         run: nuget restore UnityModManager.sln
         shell: bash
 
-      - name: Build solution (Release, Any CPU)
-        run: |
-          msbuild UnityModManager.sln /p:Configuration=Release /p:Platform="Any CPU" /m
-        shell: bash
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Build solution
+        run: msbuild UnityModManager.sln /p:Configuration=Release /p:Platform="Any CPU" /m
+        shell: cmd
 
       - name: Find built UnityModManager DLL(s)
         run: |
