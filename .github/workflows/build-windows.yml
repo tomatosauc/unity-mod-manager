@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Ensure msbuild logging
-        run: set -x
+        run: $DebugPreference = "Continue"
 
       - name: Setup Visual Studio (preinstalled on runner)
         shell: cmd
