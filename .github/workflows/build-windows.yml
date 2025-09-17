@@ -1,4 +1,4 @@
-name: Build UnityModManager (Windows)
+name: Build UnityModManager
 
 on:
   push:
@@ -6,39 +6,19 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-windows:
+  build:
     runs-on: windows-latest
+
     steps:
-      - name: Checkout repo
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Ensure msbuild logging
-        run: $DebugPreference = "Continue"
+      # Optional: if you host Unity DLLs in a separate private repo or storage, pull them here
+      # - name: Download Unity DLLs
+      #   run: ...
 
-      - name: Setup Visual Studio (preinstalled on runner)
-        shell: cmd
-        run: echo Running on Windows runner with MSBuild present
-
-      - name: Restore NuGet packages
-        run: nuget restore UnityModManager.sln
-        shell: bash
-
-      - name: Setup MSBuild
-        uses: microsoft/setup-msbuild@v2
-
-      - name: Build solution
-        run: msbuild UnityModManager.sln /p:Configuration=Release /p:Platform="Any CPU" /m
-        shell: cmd
-
-      - name: Find built UnityModManager DLL(s)
+      - name: Build with MSBuild
         run: |
-          echo "Built files:"
-          find . -type f -name "UnityModManager*.dll" -print -exec file {} \;
-        shell: bash
-
-      - name: Upload built DLL artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: unitymodmanager-dll
-          path: |
-            **/bin/Release/**/UnityModManager*.dll
+          msbuild UnityModManager/UnityModManager.csproj `
+            /p:Configuration=Release `
+            /p:PlatformTarget=AnyCPU
