@@ -24,7 +24,7 @@ jobs:
         run: msbuild UnityModManager/UnityModManager.csproj /p:Configuration=Release /p:OutputPath=UnityModManager/build/
 
       - name: Upload build artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: UnityModManager-DLL
           path: UnityModManager/build/UnityModManager.dll
