@@ -29,7 +29,7 @@ jobs:
 
       # now you can build
       - name: Build
-        run: msbuild UnityModManager/UnityModManager.csproj /p:Configuration=Release
+        run: msbuild UnityModManager/UnityModManager.csproj /p:Configuration=Release /p:Platform="Any CPU"
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
