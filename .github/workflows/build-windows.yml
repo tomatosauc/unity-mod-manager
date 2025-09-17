@@ -8,17 +8,11 @@ on:
 jobs:
   build:
     runs-on: windows-latest
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      # Optional: if you host Unity DLLs in a separate private repo or storage, pull them here
-      # - name: Download Unity DLLs
-      #   run: ...
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2   # <-- THIS sets up PATH for msbuild
 
-      - name: Build with MSBuild
-        run: |
-          msbuild UnityModManager/UnityModManager.csproj `
-            /p:Configuration=Release `
-            /p:PlatformTarget=AnyCPU
+      - name: Build
+        run: msbuild UnityModManager/UnityModManager.csproj /p:Configuration=Release
