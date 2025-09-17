@@ -11,6 +11,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Ensure build directory exists
+        # create the folder beforehand
+        run: |
+          if (-not (Test-Path -Path UnityModManager\build)) {
+            New-Item -ItemType Directory -Path UnityModManager\build | Out-Null
+          }
+        shell: pwsh
+
       # makes msbuild.exe available on PATH
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v2
